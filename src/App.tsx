@@ -5,12 +5,10 @@ import RadioField from './component/form/RadioField';
 import CalculateIcon from '@mui/icons-material/Calculate';
 
 function App() {
-  // maxWidth="xl" sx={ { display: "flex", justifyContent: "center", alignItems: "center", padding: "0px", flexWrap: "wrap" }}
-  const theme = useTheme();
 
   return (
     <>
-      <Container sx={{ padding: "0px", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <Container maxWidth="lg" sx={{ padding: "0px", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
         <StyledBox>
 
           <Calculator>
@@ -84,6 +82,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   alignItems: "stretch",
   padding: "0px",
   flexWrap: "wrap",
+  backgroundColor: theme.palette.background.white,
   // border: '2px solid red',
   borderRadius: theme.spacing(3),
   overflow: 'hidden',
@@ -100,6 +99,7 @@ const Results = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.primary,
   padding: theme.spacing(4),
   flex: 1,
+  borderBottomLeftRadius: theme.spacing(8),
 }));
 
 
