@@ -24,8 +24,8 @@ const InputField = ({ startAdornment, label = "", endAdornment = "" }) => {
             </Typography>
             <TextField
                 id="outlined-basic"
-                size="small"
-                error={true}
+                size="medium"
+                // error={true}
                 variant="outlined"
                 slotProps={{
                     input: {
@@ -63,7 +63,7 @@ const InputField = ({ startAdornment, label = "", endAdornment = "" }) => {
                         ) : null,
                     },
                 }}
-                type="number"
+                // type="number"
                 autoComplete="off"
                 inputProps={{
                     style: {

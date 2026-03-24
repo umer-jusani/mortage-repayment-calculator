@@ -9,7 +9,8 @@ let customColors = {
   slate500: 'hsl(200, 26%, 54%)',
   slate700: 'hsl(200, 24%, 40%)',
   slate900: 'hsl(202, 55%, 16%)',
-  yellow: 'hsl(61, 70%, 52%)',
+  slate1000: 'rgba(15, 36, 48, 1)',
+  yellow: '#dadc4a',
   red: 'hsl(4, 69%, 50%)',
 };
 
@@ -45,6 +46,7 @@ let UItheme = createTheme({
       default: customColors.slate100,
       white: customColors.white,
       primary: customColors.slate900,
+      paper: customColors.slate1000
     },
     border: {
       main: customColors.slate700,
@@ -62,17 +64,18 @@ let UItheme = createTheme({
       letterSpacing: '0.15px',
       textSizeAdjust: 0.5,
       // fontSizeAdjust: 0.5,
-      color: customColors.slate700,
+      color: "#92aec1",
     },
     h5: {
       fontSize: '24px',
-      fontWeight: 700,
+      fontWeight: 600,
       letterSpacing: '0.15px',
       textSizeAdjust: 0.5,
       color: customColors.slate900,
     },
     h3: {
-      fontSize: '45px',
+
+      fontSize: '50px',
       fontWeight: 700,
       letterSpacing: '0.15px',
       textSizeAdjust: 0.5,
@@ -87,6 +90,24 @@ let UItheme = createTheme({
         }
       }
     },
+    MuiButton: {
+      defaultProps: {
+        sx: {
+          padding: '10px 30px',
+          borderRadius: '100vw',
+          border: "none",
+          outline: "none",
+          fontSize: { sm: '14px', md: '16px' },
+          boxShadow: "0px 2px 8px 0px rgba(43, 56, 56, 0.07)", // Thori si box shadow
+          fontWeight: 700,
+          color: customColors.slate900,
+          textTransform: "none",
+          "&:hover": {
+            opacity: 0.5,
+          }
+        },
+      },
+    }
   }
 });
 
