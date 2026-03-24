@@ -78,13 +78,30 @@ function App() {
 export default App
 
 
-const StyledBox = styled(Box)({
+const StyledBox = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "stretch",
   padding: "0px",
   flexWrap: "wrap",
-});
+  // border: '2px solid red',
+  borderRadius: theme.spacing(3),
+  overflow: 'hidden',
+}));
+
+const Calculator = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.white,
+  padding: theme.spacing(4),
+  overflow: 'hidden',
+  flex: 1,
+}));
+
+const Results = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.background.primary,
+  padding: theme.spacing(4),
+  flex: 1,
+}));
+
 
 const SummaryCard = styled(Box)(({ theme }) => ({
   padding: "20px",
@@ -94,16 +111,3 @@ const SummaryCard = styled(Box)(({ theme }) => ({
   borderTop: `4px solid ${theme.palette.primary.main}`,
 }));
 
-const Calculator = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.background.white,
-  padding: theme.spacing(4),
-  borderTopLeftRadius: theme.spacing(4),
-  borderBottomLeftRadius: theme.spacing(4),
-  flex: 1,
-}));
-
-const Results = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.background.primary,
-  padding: theme.spacing(4),
-  flex: 1,
-}));
