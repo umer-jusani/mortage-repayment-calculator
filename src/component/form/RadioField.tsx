@@ -7,11 +7,12 @@ import FormLabel from '@mui/material/FormLabel';
 import { styled, useTheme } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 
-export default function RadioField() {
+export default function RadioField({ onChange, error }: { onChange: (value: 'Repayment' | 'Interest Only') => void, error: boolean }) {
     const [value, setValue] = React.useState('female');
     const theme = useTheme();
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue((event.target as HTMLInputElement).value);
+        onChange(event.target.value as 'Repayment' | 'Interest Only');
     };
 
     // Hint 1: Notice how your current styling is always applied, regardless of which radio is selected.
@@ -28,6 +29,7 @@ export default function RadioField() {
                 </Typography>
             </FormLabel>
             <RadioGroup
+
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={value}

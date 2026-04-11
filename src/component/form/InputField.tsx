@@ -1,14 +1,23 @@
-import { Box, InputAdornment, styled, TextField, Typography, useTheme } from '@mui/material'
-import React from 'react'
+import { Box, InputAdornment, styled, TextField, Typography, useTheme } from '@mui/material';
 
 /** Matches reference: muted blue-grey frame + same weight as outer border */
 const INPUT_FRAME_COLOR = '#9fb3c8'
-const INPUT_FRAME_WIDTH = 2
 
-const InputField = ({ startAdornment, label = "", endAdornment = "" }) => {
+interface InputFieldProps {
+    startAdornment?: string;
+    label: string;
+    endAdornment?: string;
+    onChange: (value: number) => number;
+    error: boolean;
+}
 
-
+const InputField = ({ startAdornment, label, endAdornment, onChange, error }: InputFieldProps) => {
     const theme = useTheme();
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        onChange(Number(event.target.value));
+    };
+
     return (
         <Box sx={{ width: '100%' }}>
             <Typography
@@ -25,6 +34,8 @@ const InputField = ({ startAdornment, label = "", endAdornment = "" }) => {
             <TextField
                 id="outlined-basic"
                 size="medium"
+                error={error}
+                onChange={handleChange}
                 // error={true}
                 variant="outlined"
                 slotProps={{
