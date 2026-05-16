@@ -5,7 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { styled, useTheme } from "@mui/material/styles";
-import { Typography } from "@mui/material";
+import { type Theme, Typography } from "@mui/material";
 
 export default function RadioField({
   value: valueFormState,
@@ -17,7 +17,7 @@ export default function RadioField({
   error?: boolean;
 }) {
   const [value, setValue] = React.useState("");
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   console.log(error, "error");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

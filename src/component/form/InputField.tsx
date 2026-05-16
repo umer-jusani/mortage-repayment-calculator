@@ -5,6 +5,7 @@ import {
   TextField,
   Typography,
   useTheme,
+  type Theme,
 } from "@mui/material";
 
 /** Matches reference: muted blue-grey frame + same weight as outer border */
@@ -65,6 +66,7 @@ const InputField = ({
           input: {
             startAdornment: startAdornment ? (
               <StyledInputAdornment
+                theme={theme}
                 position="start"
                 style={{
                   borderRight: `1px solid ${theme.palette.primary.light}`,
@@ -89,6 +91,7 @@ const InputField = ({
             ) : null,
             endAdornment: endAdornment ? (
               <StyledInputAdornment
+                theme={theme}
                 position="end"
                 style={{
                   borderLeft: `1px solid ${theme.palette.primary.light}`,
@@ -167,7 +170,7 @@ const InputField = ({
 
 export default InputField;
 
-const StyledInputAdornment = styled(InputAdornment)(({ theme, state }) => ({
+const StyledInputAdornment = styled(InputAdornment)(({ theme, state }: { theme: Theme, state: "error" | "default" }) => ({
   margin: 0,
   height: "auto",
   alignSelf: "stretch",

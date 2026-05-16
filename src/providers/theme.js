@@ -42,7 +42,7 @@ let UItheme = createTheme({
     secondary: {
       main: customColors.yellow,
     },
-    background: {
+    background : {
       default: customColors.slate100,
       white: customColors.white,
       primary: customColors.slate900,

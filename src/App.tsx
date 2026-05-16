@@ -4,8 +4,6 @@ import {
   Box,
   styled,
   Grid,
-  TextField,
-  useTheme,
   Button,
   Divider,
 } from "@mui/material";
@@ -106,9 +104,10 @@ function App() {
                   error={
                     formState.submitError ? !formState.mortageAmount : false
                   }
-                  onChange={(e: number) =>
-                    setFormState({ ...formState, mortageAmount: e })
-                  }
+                  onChange={(e: number) => {
+                    setFormState({ ...formState, mortageAmount: e });
+                    return e;
+                  }}
                 />
               </Grid>
               <Grid size={{ xs: 12, md: 6 }} component={Box}>
@@ -117,9 +116,10 @@ function App() {
                   label="Mortage Term"
                   endAdornment="years"
                   error={formState.submitError ? !formState.mortageTerm : false}
-                  onChange={(e: number) =>
-                    setFormState({ ...formState, mortageTerm: e })
-                  }
+                  onChange={(e: number) => {
+                    setFormState({ ...formState, mortageTerm: e });
+                    return e;
+                  }}
                 />
               </Grid>
               <Grid size={{ xs: 12, md: 6 }} component={Box}>
@@ -130,9 +130,10 @@ function App() {
                   error={
                     formState.submitError ? !formState.interestRate : false
                   }
-                  onChange={(e: number) =>
-                    setFormState({ ...formState, interestRate: e })
-                  }
+                  onChange={(e: number) => {
+                    setFormState({ ...formState, interestRate: e });
+                    return e;
+                  }}
                 />
               </Grid>
               <Grid size={12} component={Box}>
@@ -143,9 +144,10 @@ function App() {
                       ? !Boolean(formState.mortageType)
                       : false
                   }
-                  onChange={(value: "Repayment" | "Interest Only") =>
-                    setFormState({ ...formState, mortageType: value })
-                  }
+                  onChange={(value: "Repayment" | "Interest Only") => {
+                    setFormState({ ...formState, mortageType: value });
+                    return value;
+                  }}
                 />
               </Grid>
             </Grid>
