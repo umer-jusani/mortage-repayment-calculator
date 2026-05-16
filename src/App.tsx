@@ -32,12 +32,37 @@ function App() {
     mortageType: "Repayment",
     submitError: false,
   });
+  const [result, setResult] = useState<number>(0);
   // const [error, setError] = useState<boolean>(false);
-
-  console.log(formState);
 
   const handleCalculateRepayments = () => {
     setFormState({ ...formState, submitError: true });
+
+    if (
+      !formState.mortageAmount ||
+      !formState.mortageTerm ||
+      !formState.interestRate ||
+      !formState.mortageType
+    ) {
+      setResult(0);
+      return;
+    }
+
+    const monthlyInterestRate = formState.interestRate / 100 / 12;
+    const numberOfPayments = formState.mortageTerm * 12;
+    const monthlyPayment =
+      (formState.mortageAmount * monthlyInterestRate) /
+      (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+    setResult(monthlyPayment);
+  };
+
+  const handleClearAll = () => {
+    setFormState({
+      mortageAmount: 0,
+      mortageTerm: 0,
+      interestRate: 0,
+    } as formState);
+    setResult(0);
   };
 
   return (
@@ -45,11 +70,11 @@ function App() {
       <Container
         maxWidth="lg"
         sx={{
-          padding: "0px",
-          height: "100vh",
+          padding: 0,
+          minHeight: { xs: "100dvh", md: "100vh" },
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: { xs: "flex-start", md: "center" },
         }}
       >
         <StyledBox>
@@ -57,19 +82,25 @@ function App() {
           <Calculator>
             <Box
               sx={{
-                display: "flex",
+                display: { xs: "block", md: "flex" },
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
               <Typography variant="h5">Mortgage Calculator</Typography>
-              <Typography variant="body1" sx={{ textDecoration: "underline" }}>
+              <Typography
+                variant="body1"
+                onClick={handleClearAll}
+                sx={{ textDecoration: "underline", cursor: "pointer" }}
+                paddingTop={{ xs: 1, md: 0 }}
+              >
                 Clear All
               </Typography>
             </Box>
             <Grid container sx={{ my: 4 }} spacing={2}>
               <Grid size={12} component={Box}>
                 <InputField
+                  value={formState.mortageAmount}
                   label="Mortage Amount"
                   startAdornment="£"
                   error={
@@ -82,6 +113,7 @@ function App() {
               </Grid>
               <Grid size={{ xs: 12, md: 6 }} component={Box}>
                 <InputField
+                  value={formState.mortageTerm}
                   label="Mortage Term"
                   endAdornment="years"
                   error={formState.submitError ? !formState.mortageTerm : false}
@@ -92,6 +124,7 @@ function App() {
               </Grid>
               <Grid size={{ xs: 12, md: 6 }} component={Box}>
                 <InputField
+                  value={formState.interestRate}
                   label="Interest Rate"
                   endAdornment="%"
                   error={
@@ -104,7 +137,12 @@ function App() {
               </Grid>
               <Grid size={12} component={Box}>
                 <RadioField
-                  error={formState.submitError ? !formState.mortageType : false}
+                  value={formState.mortageType || ""}
+                  error={
+                    formState.submitError
+                      ? !Boolean(formState.mortageType)
+                      : false
+                  }
                   onChange={(value: "Repayment" | "Interest Only") =>
                     setFormState({ ...formState, mortageType: value })
                   }
@@ -126,61 +164,66 @@ function App() {
           {/* Results Section */}
           <Results>
             {/* Results */}
-            {/* <Box>
-              <Typography variant="h5" color="text.white" mb={2}>
-                Your results
-              </Typography>
-              <Typography variant="body1" color="#92aec1">
-                Your results are shown below based on the information you
-                provided. To adjust the results, eidt the form and click
-                "calculaterepayments" again.
-              </Typography>
-            </Box>
+            {result > 0 ? (
+              <>
+                <Box>
+                  <Typography variant="h5" color="text.white" mb={2}>
+                    Your results
+                  </Typography>
+                  <Typography variant="body1" color="#92aec1">
+                    Your results are shown below based on the information you
+                    provided. To adjust the results, eidt the form and click
+                    "calculaterepayments" again.
+                  </Typography>
+                </Box>
 
-            <SummaryCard mt={4}>
-              <Typography variant="body1">Your Monthly Repayments</Typography>
-              <Typography variant="h3" mt={1}>
-                £1,77.74
-              </Typography>
-              <Divider sx={{ my: 3 }} />
-              <Typography variant="body1" mb={1}>
-                Total you will repay over the term
-              </Typography>
-              <Typography variant="h5" color="text.white">
-                £539,322.94
-              </Typography>
-            </SummaryCard> */}
-
-            {/* Heading */}
-            <Box
-              sx={{
-                height: "100%",
-                display: "flex",
-                gap: 2,
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <img
-                src={mortgageCalculator}
-                alt="Mortgage Calculator"
-                style={{
-                  objectFit: "contain",
-                  minWidth: "50%",
-                  display: "block",
-                  margin: "0 auto",
+                <SummaryCard mt={4}>
+                  <Typography variant="body1">
+                    Your Monthly Repayments
+                  </Typography>
+                  <Typography variant="h3" mt={1}>
+                    {result.toFixed(2)}
+                  </Typography>
+                  <Divider sx={{ my: 3 }} />
+                  <Typography variant="body1" mb={1}>
+                    Total you will repay over the term
+                  </Typography>
+                  <Typography variant="h5" color="text.white">
+                    {result.toFixed(2)}
+                  </Typography>
+                </SummaryCard>
+              </>
+            ) : (
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  gap: 2,
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
                 }}
-              />
-              <Typography variant="h5" color="text.white">
-                Results shown here
-              </Typography>
-              <Typography variant="body1">
-                Complete the form and click "Calculate repayments" to see what
-                your monthly repayments woudld be.
-              </Typography>
-            </Box>
+              >
+                <img
+                  src={mortgageCalculator}
+                  alt="Mortgage Calculator"
+                  style={{
+                    objectFit: "contain",
+                    minWidth: "50%",
+                    display: "block",
+                    margin: "0 auto",
+                  }}
+                />
+                <Typography variant="h5" color="text.white">
+                  Results shown here
+                </Typography>
+                <Typography variant="body1">
+                  Complete the form and click "Calculate repayments" to see what
+                  your monthly repayments woudld be.
+                </Typography>
+              </Box>
+            )}
           </Results>
         </StyledBox>
       </Container>
